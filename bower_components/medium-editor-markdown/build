@@ -1,0 +1,25 @@
+#!/usr/bin/env node
+
+// Dependencies
+var Fs = require("fs")
+  , Barbe = require("barbe")
+  , MeMarkdown = require("./src/medium-editor-md")
+  , UglifyJS = require("uglify-js")
+  ;
+
+// Constants
+const TEMPLATE_EMBEDED = Fs.readFileSync("./src/embeded.js", "utf-8")
+    , TEMPLATE_NO_DEPS = Fs.readFileSync("./src/me-markdown.js", "utf-8")
+    , TO_MARKDOWN = Fs.readFileSync("./node_modules/to-markdown/dist/to-markdown.js", "utf-8")
+    , MUSTACHE_DATA = {
+        toMarkdown: TO_MARKDOWN
+      , MeMarkdown: MeMarkdown.toString()
+      }
+    ;
+
+// Create the dist files
+var lastStr = "";
+Fs.writeFileSync("./dist/me-markdown.standalone.js",  lastStr = Barbe(TEMPLATE_EMBEDED, ["{{{", "}}}"], MUSTACHE_DATA));
+Fs.writeFileSync("./dist/me-markdown.standalone.min.js", UglifyJS.minify(lastStr, { fromString: true }).code);
+Fs.writeFileSync("./dist/me-markdown.no-deps.js", lastStr = Barbe(TEMPLATE_NO_DEPS, ["{{{", "}}}"], MUSTACHE_DATA));
+Fs.writeFileSync("./dist/me-markdown.no-deps.min.js", UglifyJS.minify(lastStr, { fromString: true }).code);
