@@ -8,7 +8,7 @@ The latest version of plugin bundled by this gem is [v2.6.1](https://github.com/
 
 ## Installation
 
-Include **medium-editor-insert-plugin-rails** in your Rails project's Gemfile:
+Include **medium-editor-markdown-rails** in your Rails project's Gemfile:
 
 ```ruby
 gem 'medium-editor-rails'
@@ -31,9 +31,9 @@ Include javascript file in **app/assets/javascripts/application.js**:
 //= require medium-editor-markdown-plugin
 ```
 
-## Using Medium Editor with Rails
+## Using plugin with Medium Editor
 
-You need to initialize Markdown Plugin with any selector of div, example:
+Initialize Medium Editor and add Markdown Plugin inside configuration:
 
 ```html
 <div class="editable"></div>
